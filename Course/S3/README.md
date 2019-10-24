@@ -77,15 +77,16 @@ S3 is charged for:
 * AWS-KMS Use Server-Side Encryption with AWS KMS-Managed Keys (SSE-KMS)
 * Server-Side Encryption with Customer-Provided Keys (SSE-C)
 
-* Control access to the bucket using bucket ACL or Bucket policies
-* By default all buckets and objects within are private
+* Control access to the bucket using bucket ACL or Bucket policies.
+* By default all buckets and objects within are private.
 
 ### [S3 Version Control](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html)
 
 * Once you enable versioning, you can't disable it, you can only suspend it. A way of disabling it is to delete the bucket and re-create it
 * Every time you update an object, it will become private by default.
-* It integrates with Lifecycle rules.
-* You pay for each version you have
+* It integrates with Lifecycle policies.
+* Provides MFA Delete capability.
+* You pay for each version you have.
 * Delete an object:
 
     Once you delete a file inside a versioned bucket, you don't delete the file, you simply add a Delete Marker (this basically creates a new version of the object)
@@ -137,10 +138,10 @@ Only creations and modifications are replicated to the bucket in the other regio
   * In transit: from to your bucket, HTTPS for example
   * At rest:
     * Server-side encryption:
-      * S3 Managed Keys: SSE-S3 (Keys are managed by S3)
-      * Key Management Service: SS3-KMS the customer manages the keys
-      * Server-side encryption: Here you manage the keys, and Amazon manage the writes
-  * Client-side Encryption: You encrypt the data and you upload it encrypted to S3
+      * SSE-S3: S3 Managed Keys. (Keys are managed by S3)
+      * SSE-KMS: AWS Key Management Service. Customer and AWS manage the keys. (Not in this course)
+      * SSE-C: Server-Side Encryption. The customer provides the keys, and Amazon manage the writes.
+  * Client-side Encryption: You encrypt the data and you upload it encrypted to S3.
 
 ## [Amazon Storage](https://aws.amazon.com/products/storage/)
 
