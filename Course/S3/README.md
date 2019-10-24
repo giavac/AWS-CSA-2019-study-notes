@@ -4,19 +4,20 @@
 
 ### [What's S3](https://aws.amazon.com/s3/)
 
-* Object-based storage: you can save only object, you can't, for example, install an OS (In this case you need block-based storage).
+* Object-based storage: you can save only object, you can't, for example, install an OS or DB (In this case you need block-based storage).
 * Files can save from 0 Bytes to 5 TB.
 * No storage Limits.
 * Files are stored in Buckets (a folder in a cloud).
 * S3 is a universal namespace, the name must be unique globally. So you **cannot** have the same name as someone else.
 * Sample of an S3 URL: ```https://s3-eu-west-1.amazonaws.com/yourbucket```.
 * When you upload an object in S3 you get an HTTP 200 OK code back.
+* You can turn on MFA Delete.
 
 ### Data Consistency for S3
 
-* It's consistent in reads after a write on new objects.
-* It's eventually consistent for overwriting and deletes (this means it can take some time to propagate)
-* S3 is spread across multiple AZ's
+* It's consistent in reads after a write (PUT) on new objects.
+* It's eventually consistent for overwriting (PUT) and DELETEs (this means it can take some time to propagate).
+* S3 is spread across multiple AZ's.
 
 ### Components
 
@@ -24,7 +25,7 @@
   * Key (name of the object)
   * Value (data)
   * Version ID (Used on versioning)
-  * Metadata (a set of data that describes and gives information about the object data.)
+  * Metadata (a set of data that describes and gives information about the object data)
   * Subresources:
     * Access Control List (Decide who can access files)
     * Torrent (Not an exam topic)
@@ -43,16 +44,21 @@
 
 ### [S3 Storage Tiers](https://aws.amazon.com/s3/storage-classes/)
 
+There are 6:
 * S3 standard: 99.99% availability 11x9s durability (it sustains the loss of 2 facilities concurrently)
-* S3 IA: (Infrequently Accessed): For data that is accessed less frequently, but needs rapid access. You are charged a retrieval fee per GB retrieved
-* S3 One Zone IA: Like S3 IA but data is stored only in one AZ
-* Glacier: Most cheap, used for archival only.
+* S3 IA: (Infrequently Accessed): For data that is accessed less frequently, but needs rapid access. You are charged a retrieval fee per GB retrieved. 99.9% availability.
+* S3 One Zone IA: Like S3 IA but data is stored only in one AZ. 99.9% availability.
+* S3 Intelligent Tiering: uses ML to move data automatically to the most cost-efficient tier. 99.5% availability.
+* S3 Glacier: Cheapest, used for archival only.
   * Expedited: few minutes for retrieval
   * Standard: 3-5 hours for retrieval
   * Bulk: 5-12 hours for retrieval
   * It encrypts data by default
   * Regionally availability
   * Designed with 11x9s durability, like S3
+* S3 Glacier Deep Archive: lowest cost. Retrieval times up to 12 hours.
+
+(All except Glacier provide retrieval times of msec.)
 
 ### [Charges](https://aws.amazon.com/s3/pricing/)
 
@@ -62,7 +68,8 @@ S3 is charged for:
 * Requests
 * Storage management pricing
 * Data Transfer Pricing
-* Transfer acceleration (it's using CloudFront the AWS CDN) using edge locations
+* Transfer acceleration (it's using CloudFront the AWS CDN) using Edge Locations
+* Cross-region replication
 
 ### [Server side Encryption and ACL](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html)
 
