@@ -170,9 +170,12 @@ Snowmobile: AWS Snowmobile is an Exabyte-scale data transfer service used to mov
 
 ## [S3 Transfer Acceleration](https://docs.aws.amazon.com/AmazonS3/latest/dev/transfer-acceleration.html)
 
-Instead of uploading files directly to your S3 bucket, you can use the AWS edge network.
-Using a specific URL, you upload the file to your local edge and then the file will be uploaded to S3
-an example or URL:  alessio-casco-accelerate.s3-accelerate.amazonaws.com
+Instead of uploading files directly to your S3 bucket, you can use the AWS CloudFront Edge Network.
+Using a specific URL, you upload the file to your local Edge Location and then the file will be uploaded to S3.
+
+An example of URL:  `alessio-casco-accelerate.s3-accelerate.amazonaws.com`
+
+There is an S3 Transfer Acceleration tool to compare upload speed using Transfer Acceleration vs normal S3 uploads.
 
 ## [Static Website Using S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/HowDoIWebsiteConfiguration.html)
 
