@@ -36,7 +36,7 @@
 * S3 is built for 99.99%
 * S3 guarantees 11x9s (99.999999999) durability for S3 information.
 * Tiered Storage (classes) available
-* You can have lifecycle management
+* You can have Lifecycle management
 * Versioning
 * Supports [multi-part upload](https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html)
 * Encryption
@@ -84,17 +84,17 @@ S3 is charged for:
 
 * Once you enable versioning, you can't disable it, you can only suspend it. A way of disabling it is to delete the bucket and re-create it
 * Every time you update an object, it will become private by default.
-* It integrates with Lifecycle policies.
+* It integrates with Lifecycle rules. Lifecycle allows you to automatically move objects between storage tiers after a configurable amount of time. Lifecycle rules can be applied to current and previous versions.
 * Provides MFA Delete capability.
 * You pay for each version you have.
 * Delete an object:
 
-    Once you delete a file inside a versioned bucket, you don't delete the file, you simply add a Delete Marker (this basically creates a new version of the object)
+    Once you delete a file inside a versioned bucket, you don't delete the file, you simply add a Delete Marker (this basically creates a new version of the object).
     If you delete the version with the Detele Marker you will basically restore the object.
 
     If you want to permanently delete the object, you have to delete all the Versions of the object.
 
-    You can optionally add another layer of security by configuring a bucket to enable MFA Delete
+    You can optionally add another layer of security by configuring a bucket to enable MFA Delete.
 
     More info about versioning:
     [ObjectVersioning](https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectVersioning.html)
@@ -103,14 +103,17 @@ S3 is charged for:
 
 ### [S3 Cross region replication](https://docs.aws.amazon.com/AmazonS3/latest/dev/crr.html)
 
-* Regions must be unique
+* Enables automatic and asynchronous copying of objects across buckets in different AWS Regions.
+* Cross Region Replication requires bucket versioning on both the source and the destination.
+* Regions must be unique.
 * Cross region replication doesn't replicate existing object by default, only new ones (after the replicate is set) will be replicated automatically.
 * In order to replicate the existing objects, you need to do a `cp` using the aws cli:
 
     `aws s3 cp --recursive s3://alessio-casco-versioning s3://alessio-casco-versioning-replica-sydney`
-* If you delete an object in the primary bucket, the delete action and markers won't be done or replicated in your remote bucket, this is a security function.
-Only creations and modifications are replicated to the bucket in the other regions NOT the delete
-* You can't replicate over multiple buckets, the maps are always 1-to-1
+    
+* Delete Markers are not replicated. If you delete an object in the primary bucket, the delete action and markers won't be done or replicated in your remote bucket: this is a security function to prevent accidental deletes from a bucket to another.
+Only creations and modifications are replicated to the bucket in the other regions, NOT the delete.
+* You can't replicate over multiple buckets, the maps are always 1-to-1.
 
 ## [CloudFront](https://aws.amazon.com/cloudfront/)
 
