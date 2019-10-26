@@ -119,16 +119,19 @@ Only creations and modifications are replicated to the bucket in the other regio
 
 ### [What's a CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
 
-* A content delivery network or content distribution network is a geographically distributed network of proxy servers and their data centres
+* A CDN (Content Delivery Network or Content Distribution Network) is a geographically distributed network of proxy servers and their data centres.
 
 * Key terminology about CloudFront:
-  * Edge Location: Is the location where the content is cached (separate from AWS AZ's or regions)
-    Be aware that you can also write on edge locations, is not ready only.
-  * Invalidating (erasing) the cache costs money.
-  * Origin: Is the source of the files the CDN will distribute. An origin can be an EC2 instance, an S3 bucket, an Elastic Load Balancer or Route53, you can also have your own origin, it not mandatory that is within AWS.
-  * Distribution: Is the name AWS calls CDN's.
-    * You can Have two types: Web that is for generic web contents and RTMP that is for video streaming
-    * TTL: time to live of the cached object.
+  * Edge Location: It's the location where the content is cached (separate from AWS AZ's or regions). Read/Write.
+    Be aware that you can also write on edge locations, it is not ready only. Invalidating (erasing) the cache costs money.
+  * Origin: It's the source of the files the CDN will distribute. An origin can be an EC2 instance, an S3 bucket, an Elastic Load Balancer or Route53. You can also have your own origin, it is not mandatory to be within AWS.
+  * Distribution: It's the name AWS uses to refer to CDN's. It consists of a collection of Edge Locations.
+    * You can Have two types: `Web Distribution` for generic web contents and `RTMP` (Adobe FlashMedia) for media streaming.
+    * TTL: time to live of the cached object (in seconds).
+    
+Access to Origins can be restricted by using Signed URLs or Signed Cookies.
+WAF: Web Application Firewall (optional layer 7 firewall).
+The deployment of Distributions may take a long time (up to an hour).
 
 ### [S3 Security & Encryption](https://aws.amazon.com/blogs/aws/new-amazon-s3-encryption-security-features/)
 
@@ -160,13 +163,13 @@ Tape Gateway (VTL): Virtual tapes
 
 ### [Snowball](https://aws.amazon.com/snowball/)
 
-Import Export is still available and was the first version of snowball, you used to ship your drives to AWS
+Snowball is an appliance. It is a petabyte-scale data transport solution that uses devices designed to be secure to transfer large amounts of data into and out of the AWS Cloud. Sizes of 50 TB or 80 TB.
 
-Snowball is (an appliance) a petabyte-scale data transport solution that uses devices designed to be secure to transfer large amounts of data into and out of the AWS Cloud
+AWS Snowball Edge is a 100 TB data transfer device with onboard storage-computer capabilities. It's like an AWS DC in a box.
 
-Snowball edge: is a 100TB data transfer device with onboard storage-computer capabilities. It's like an AWS DC in a box
+AWS Snowmobile is an Exabyte-scale data transfer service used to move extremely large amounts of data to AWS. A truck full of disks basically.
 
-Snowmobile: AWS Snowmobile is an Exabyte-scale data transfer service used to move extremely large amounts of data to AWS. A truck full of disks basically.
+TPM (Trusted Platform Module) ensures security and full chain-of-custody of your data.
 
 ## [S3 Transfer Acceleration](https://docs.aws.amazon.com/AmazonS3/latest/dev/transfer-acceleration.html)
 
