@@ -62,8 +62,9 @@ Remember also that you can create [snapshots of your RAID arrays](https://aws.am
 
 * Termination protection is turned off by default.
 * The EBS root volume by default is deleted at termination.
-* Default AMI's (provided by Amazon) cannot be encrypted.
+* The EBS root volume of the default AMI's (provided by Amazon) cannot be encrypted.
 * Additional volumes can be encrypted.
+* AZ names are different across accounts, so AZa for an account can be different to AZa in another account. They are randomised.
 
 ## Security groups - Lab
 
@@ -71,11 +72,26 @@ Remember also that you can create [snapshots of your RAID arrays](https://aws.am
 
 A security group acts as a virtual firewall for your instance to control inbound and outbound traffic.
 
-* All Inbound traffic is Blocked by Default.
-* All Outbound traffic is Blocked by Default.
-* All security groups changes are applied immediately.
-* Security groups are stateful. For example, if you allow the request to come in, automatically responses can go out even if you don't have anything on the outbound section of your security group.
+* All Inbound traffic is Blocked by Default. You need to change the Security Group to allow it.
+* All Outbound traffic is allowed. Even removing the Outbound Security Group has no effect on outbound traffic.
+* All security groups changes are applied _immediately_.
+* Security groups are _stateful_. For example, if you allow the request to come in, automatically responses can go out even if you don't have anything on the outbound section of your security group.
 * You can specify only allow rules, not deny rules.
+* You can have multiple Security Groups to an EC2 instance. (And many EC2 instances can use the same SG).
+* You cannot block specific IP addresses using Security Groups, but instead you need to use Network ACLs.
+
+## EBS
+
+Elastic Block Storage. Persistent block storage volumes to be used by EC2 instances.
+Automatically replicated within its AZ for availability and durability.
+It's basically a virtual HDD in the cloud.
+Flavours:
+* General Purpose SSD: most work loads. gp2. Upt to 16000 IOPS/Volume.
+* Priovisioned IOPS SSD: DBs. io1. Up to 64000 IOPS/Volume.
+* Throughput Optimized HDD: big data and data warehouses. st1. 500 IOPS/Volume.
+* Cold HDD: lowest cost, file servers. sc1. 250 IOPS/Volume.
+* EBS Magnetic: previous generation HDD. Standards. 40-200 IOPS/Volume.
+
 
 ## EBS Volumes & Encrypt Root Device Volume - Lab
 
