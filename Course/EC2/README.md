@@ -8,9 +8,12 @@ Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure,
 
 ### [EC2 Options](https://aws.amazon.com/ec2/pricing/)
 
-* [On demand](https://aws.amazon.com/ec2/pricing/on-demand/): You pay for computing capacity by per hour or per second depending on which instances you run.
-* [Reserved Instance (RI)](https://aws.amazon.com/ec2/pricing/reserved-instances/): Provide a significant discount (up to 75%) compared to On-Demand pricing and provide a capacity reservation when used in a specific Availability Zone. You have to enter a contract.
-* [Spot](https://aws.amazon.com/ec2/spot/): Amazon EC2 Spot instances allow you to request spare Amazon EC2 computing capacity for up to 90% off the On-Demand price.
+* [On Demand](https://aws.amazon.com/ec2/pricing/on-demand/): You pay for computing capacity by per hour or per second depending on which instances you run. No up-front payment or long-term commitment.
+* [Reserved](https://aws.amazon.com/ec2/pricing/reserved-instances/): Provides a significant discount (up to 75%) compared to On-Demand pricing and provide a capacity reservation when used in a specific Availability Zone. You have to enter a contract. For applications with steady state or predictable usage.
+  * Standard Reserved instances
+  * Convertible Reserved instances
+  * Scheduled Reserved instances
+* [Spot](https://aws.amazon.com/ec2/spot/): Amazon EC2 Spot instances allow you to request spare Amazon EC2 computing capacity for up to 90% off the On Demand price. For applications that have flexible start and end times.
 
   * If you terminate an instance, you will pay for the complete hour.
   * If Amazon terminates the instance, you won't pay for the complete hour.
@@ -19,9 +22,7 @@ Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure,
     * Capacity – If there are not enough unused EC2 instances to meet the demand for Spot Instances, Amazon EC2 interrupts Spot Instances. The order in which the instances are interrupted is determined by Amazon EC2.
     * Constraints – If your request includes a constraint such as a launch group or an Availability Zone group, these Spot Instances are terminated as a group when the constraint can no longer be met.
 
-
-
-* [Dedicated Hosts](https://aws.amazon.com/ec2/dedicated-hosts/): Is a physical server with EC2 instance capacity fully dedicated to your use.
+* [Dedicated Hosts](https://aws.amazon.com/ec2/dedicated-hosts/): Physical servers with EC2 instance capacity fully dedicated to your use. In case of regulatory requirements and licensing constraints. Up to 70% off the On Demand price.
 
 ### [What's EBS](https://aws.amazon.com/ebs/)
 
