@@ -158,19 +158,21 @@ dig +short MyClassicELB-57286656.eu-west-2.elb.amazonaws.com
 _At the time of writing, the lab instructs you to create one EC2 instance and configure the load balancer to simply point against it.
 My suggestion is to create 2 instances instead and change the `index.html` in something like `instance_1` and `instance_2` so you can see what box the load balancer decides to send your requests. Doing so, allows you to also confirm that if an instance is down, the load balancer automatically forwards traffic to the remaining one still online._
 
-### CloudWatch - Lab
+### CloudWatch (Management and Governance)
 
-* Standard monitoring is 5 min and * Detailed monitoring is 1 min (you will be charged for it)
+* CloudWatch is a monitoring service to monitor your AWS resources, as well as the applications running on AWS.
+* For EC2 instances CloudWatch monitors CPU, Network, Disk, Status Check.
+* Standard monitoring is 5 min and. `CloudWatch detailed monitoring` is 1 min (you will be charged for it)
 * Dashboard used to visualize what's happening with your AWS environment.
-* Alarms can be set to notify when a specific threshold is hit
+* Alarms can be set to notify when a specific threshold is hit.
 * Events can be used to perform actions when state changes happen in your AWS resources.
 * Logs can be aggregated in a single place to better troubleshoot. Remember that you need to install an agent on the EC2 instance.
 * By default, Matrics on EC2 instances are: CPU related, Disk related, Network related and Status check related.
+* You can create Dashboards that are global or regional.
 
-Remember that:
-
-* CloudWatch: is for monitoring resources
-* CloudTrail: is for auditing
+Remember well this difference:
+* CloudWatch: is for monitoring resources/performance.
+* CloudTrail: is for auditing. CloudTrail stores the activity of your users and resources (e.g. which users and accounts called the AWS API, the source IP address, and the time the calls were made).
 
 ### IAM Roles with EC2 - Lab
 
