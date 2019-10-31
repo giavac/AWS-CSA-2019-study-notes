@@ -95,29 +95,38 @@ Flavours:
 
 ## EBS Volumes & Encrypt Root Device Volume - Lab
 
-* Instances and Volumes MUST be in the same AZ
+* Instances and Volumes will always be in the same AZ.
 * Snapshots exists in S3.
 * Snapshots are a point in time copies of Volumes.
-* Snapshots are incremental (only differences are saved)
+* Snapshots are incremental (only differences are saved).
 * Snapshot of root volumes require the instance to be stopped.
 * _You can't delete a snapshot of an EBS volume that is used as the root device of a registered AMI._
 * You can change EBS volumes size and type on the fly.
-* To move an EC2 volume from one AZ/Region to another, take a snap or an image of it, then you can copy them to the new AZ/Region.
-* Snapshots of encrypted volumes are encrypted automatically
+* To move an EC2 volume from one AZ/Region to another, take a snapshot or an image of it, then you can copy them to the new AZ/Region.
+* To change a Root Device Volume from Unencrypted to Encrypted you need to take a snapshot, and then copy the snapshot with Encryption enabled. Then you can use it to create an Encrypted AMI to launch an Encrypted EC2 instance.
+* Snapshots of encrypted volumes are encrypted automatically.
 * Volumes restored from an encrypted snapshot will be encrypted as well.
-* You can share snapshots only if they are not encrypted, these snapshots can be made public.
+* You can share snapshots only if they are not encrypted; these snapshots can be made public.
+* When you terminate an EC2 instance, by default also the root volumes will be terminated. The additional volumes will not be terminated, and will move to "available" state.
+* You can create an AMI from both Volumes and Snapshots.
 
 ### [AMI Types](https://aws.amazon.com/amazon-linux-ami/instance-type-matrix/)
 
-* [EBS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html): Amazon EBS provides durable, block-level storage volumes that you can attach to a running instance
+* [EBS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html): Amazon EBS provides durable, block-level storage volumes that you can attach to a running instance.
   * EBS takes less time to provision.
   * EBS volumes can be kept once the instance is terminated.
-* [Instance Store / Ephemeral storage](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html): This storage is located on disks that are physically attached to the host computer
+  * The root device for an instance launched from the AMI is an EBS Volume created from an EBS snapshot.
+  * If you stop an EC2 instance, and then start it again, it will be launched on a different hypervisor.
 
+* [Instance Store / Ephemeral storage](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html): This storage is located on disks that are physically attached to the host computer.
   * Instance Store Volumes can't be stopped, if the host fails, you lose data.
   * You can reboot the instance without losing data.
   * You can not detach Instance Store Volumes.
   * Instance store volumes cannot be kept once the instance is terminated.
+  * The root device for an instance launched from the AMI is an instance store volume from a template stored in S3.
+  * There are limitations in which instance type can be used with Instance Store.
+  * Instance Store volumes cannot be added after the creation of the EC2 instance.
+  * EC2 instances with Instance Store volumes cannot be stopped (but can be rebooted). This is why it's called Ephemeral Storage. If the underlying host fails, you will lose your data.
 
 ## Elastic Load Balancers
 
