@@ -11,11 +11,11 @@ A relational database is a type of database. It uses a structure that allows us 
 
 ### [What is a non relational DataBase](https://www.mongodb.com/scale/what-is-a-non-relational-database)
 
-A non-relational database is any database that does not follow the relational model provided by traditional relational database management systems. This category of databases also referred to as NoSQL databases, has seen steady adoption growth in recent years with the rise of Big Data applications.
+A non-relational database is any database that does not follow the relational model provided by traditional relational database management systems. This category of databases also referred to as NoSQL databases, has seen steady adoption growth in recent years with the rise of Big Data applications. `Collections` are like tables, `Documents` are like rows and `Key/Value pairs` are like fields in the relational world.
 
 ### [What is data warehousing](https://en.wikipedia.org/wiki/Data_warehouse)
 
-Is a system used for reporting and data analysis, and is considered a core component of business intelligence.
+Is a system used for reporting and data analysis, and is considered a core component of business intelligence. Amazon RedShift is what provides the Data Warehousing capability.
 
 ### [OLTP vs. OLAP](https://www.datawarehouse4u.info/OLTP-vs-OLAP.html)
 
@@ -23,7 +23,7 @@ We can divide IT systems into transactional (OLTP) and analytical (OLAP). In gen
 
 ### [AWS Databases](https://aws.amazon.com/products/databases/)
 
-### Relations ones
+### RDS - Relational DBs - OLTP
 
 * SQL
 * MySQL
@@ -32,7 +32,9 @@ We can divide IT systems into transactional (OLTP) and analytical (OLAP). In gen
 * Aurora
 * MariaDB
 
-### DyanmoDB - No SQL
+RDS run on VM and apart from Aurora they are not serverless.
+
+### DyanmoDB - NoSQL
 
 ### RedShift - OLAP
 
@@ -42,32 +44,35 @@ We can divide IT systems into transactional (OLTP) and analytical (OLAP). In gen
 
 There are two different types of backups for AWS:
 
-* Automated: Are enabled by default, data is stored in S3 and are enable automatically.
-    If you delete the DB, the backup will de belated too
+* Automated: Are enabled by default, data is stored in S3 and are enable automatically. Retention period is from 1 to 35 days.
+    If you delete the DB, the backup will de belated too. Transaction logs are backed up, and this allows for a down to the second recovery of any point in time within the retention period.
 * Database snapshots: Need to be done manually, they are kept even if you remove the DB.
 
-When you restore a backup or a snapshot, the restored version of the database will be in a new RDS instance, with a new DNS name
+When you restore a backup or a snapshot, the restored version of the database will be in a new RDS instance, with a new DNS name.
 
-[Encryption](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html) You can encrypt your Amazon RDS DB instances and snapshots at rest by enabling the encryption option on your Amazon RDS DB instances.
+[Encryption](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html) You can encrypt your Amazon RDS DB instances and snapshots at rest by enabling the encryption option on your Amazon RDS DB instances. Encryption is done using the KMS system.
 
 ### [RDS Multi-AZ](https://aws.amazon.com/rds/details/multi-az/)
 
-When you provision a Multi-AZ DB Instance, Amazon RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone
+When you provision a Multi-AZ DB Instance, Amazon RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone. Failover is done automatically by AWS when the primary becomes unavailable. The DNS name doesn't change.
+Aurora by design is fault-tolerant so it doesn't provide the option to use multi-AZ.
 
-* it's for disaster recovery not for scaling.
+* it's for disaster recovery, not for scaling.
 
 ### [RDS Read Replicas](https://aws.amazon.com/rds/details/read-replicas/)
 
-This feature makes it easy to elastically scale out beyond the capacity constraints of a single DB Instance for read-heavy database workloads
-The read replica operates as a DB instance that allows only **read-only** connections
+This feature makes it easy to elastically scale out beyond the capacity constraints of a single DB Instance for read-heavy database workloads.
+The read replica operates as a DB instance that allows only **read-only** connections.
 
-* It's used for scaling not for disaster recovery
+* It's used for scaling, not for disaster recovery.
 * You need to have automatic backups on in order to have a read replica.
 * You can have up to 5 read replicas of any DB at the time of writing.
 * Each replica has its own DNS name.
-* Replicas can become their own databases.
-* You can have a replica in a second region.
+* Replicas can become their own databases (but this breaks replication).
+* You can have a read replica in a second region.
 * You can enable encryption on your replica even if your master is not.
+* You can have read replicas with multi-AZ turned on.
+
 
 ### [DynamoDB](https://aws.amazon.com/dynamodb/)
 
@@ -109,7 +114,7 @@ Columnar data stores can be compressed much more than row-based data.
 
 ### [Elasticache](https://aws.amazon.com/elasticache/)
 
-Elasticache: Managed, Redis or Memcached-compatible in-memory data store. Basically, it's a DB that saves everything in memory to increases I/O performance.
+Elasticache: Managed, Redis or Memcached-compatible in-memory data store. Basically, it's a DB that saves everything in memory to increase I/O performance.
 
 * Types of Elasticache:
   * Memcached
