@@ -36,7 +36,7 @@ RDS run on VM and apart from Aurora they are not serverless.
 
 ### DyanmoDB - NoSQL
 
-### RedShift - OLAP
+### RedShift - OLAP - Data Warehousing
 
 ### Elasticache - In Memeory Caching
 
@@ -44,8 +44,8 @@ RDS run on VM and apart from Aurora they are not serverless.
 
 There are two different types of backups for AWS:
 
-* Automated: Are enabled by default, data is stored in S3 and are enable automatically. Retention period is from 1 to 35 days.
-    If you delete the DB, the backup will de belated too. Transaction logs are backed up, and this allows for a down to the second recovery of any point in time within the retention period.
+* Automated: Are enabled by default, data is stored in S3 and are enabled automatically. Retention period is from 1 to 35 days.
+    If you delete the DB, the backup will be deleted too. Transaction logs are backed up, and this allows for a down to the second recovery of any point in time within the retention period.
 * Database snapshots: Need to be done manually, they are kept even if you remove the DB.
 
 When you restore a backup or a snapshot, the restored version of the database will be in a new RDS instance, with a new DNS name.
@@ -72,6 +72,7 @@ The read replica operates as a DB instance that allows only **read-only** connec
 * You can have a read replica in a second region.
 * You can enable encryption on your replica even if your master is not.
 * You can have read replicas with multi-AZ turned on.
+* Read replicas are available for MySQL, PostgreSQL, MariaDB, Oracle, Aurora.
 
 
 ### [DynamoDB](https://aws.amazon.com/dynamodb/)
@@ -79,11 +80,13 @@ The read replica operates as a DB instance that allows only **read-only** connec
 Amazon DynamoDB is a key-value and document database that delivers single-digit millisecond performance at any scale. It's fully managed.
 
 * Uses SSD storage.
-* Spread across 3 distinct data centres.
+* Spread across 3 geographically distinct data centres.
 * Eventual Consistent Reads (Default)
 * Strongly Consistent Reads.
 * It's scalable.
 * DynamoDB can be very expensive for writes.
+
+"One second rule".
 
 ### [Redshift](https://aws.amazon.com/redshift/)
 
@@ -99,18 +102,22 @@ Columnar data stores can be compressed much more than row-based data.
   * Compute nodes: Store data and execute queries (up to 128 computer nodes max)
 
 * Pricing:
-  * You are charged for the total number of hours you run across all your compute nodes.
-  * You are charged for backups
-  * You are also charged for data transfer within a VPC
+  * You are charged for the total number of hours you run across all your compute nodes. 1 unit per node per hour.
+  * You are charged for backups.
+  * You are also charged for data transfer within a VPC.
 
 * Security:
-  * Encrypted in transit using SSL
-  * Encrypted at rest using AES-256 encryption
-  * By default redshift takes care of key management.
+  * Encrypted in transit using SSL.
+  * Encrypted at rest using AES-256 encryption.
+  * By default Redshift takes care of key management (but you can manage your keys with HSM).
 
 * Availability:
-  * Is available only in 1 AZ
+  * Is available only in 1 AZ.
   * Can restore the snapshot to new AZ's in the event of an outage.
+  
+* Backups
+  * From 1 (default) to 35 days of data retention.
+  * Redshift tries to maintain at least 3 copies of the data.
 
 ### [Elasticache](https://aws.amazon.com/elasticache/)
 
@@ -118,20 +125,29 @@ Elasticache: Managed, Redis or Memcached-compatible in-memory data store. Basica
 
 * Types of Elasticache:
   * Memcached
-  * Redis: In memory key-value store
+  * Redis: In memory key-value store. Multi-AZ. Contrary to memcached, you can to backups and restores.
 
 ### [RDS Aurora](https://aws.amazon.com/rds/aurora/)
 
 Amazon Aurora is a MySQL and PostgreSQL-compatible relational database built for the cloud, that combines the performance and availability of traditional enterprise databases with the simplicity and cost-effectiveness of open source databases.
+5 times better performance than MySQL, at a price an order of magnitude cheaper.
 
 * Scaling:
-  * Scales in 10GB Increments up to 64TB
+  * Scales in 10GB Increments up to 64TB. Storage Autoscaling.
   * Compute resources can scale up to 32vCPUs and 244GB of Memory.
-  * 2 Copies of your data are contained in each availability zone, with a minimum of 3 availability zones.
-  * Aurora handles the loss of up two copies of data without affecting database **write** capability.
-  * Aurora handles the loss of up three copies of data without affecting database **read** capability.
+  * 2 copies of your data are contained in each availability zone, with a minimum of 3 availability zones (always 6 copies of the data).
+  * Aurora handles the loss of up to 2 copies of data without affecting database **write** capability.
+  * Aurora handles the loss of up to 3 copies of data without affecting database **read** capability.
+  * Aurora storage is self-healing.
 
 * Replicas:
   * Aurora Replicas: Separate aurora replicas (up to 15 replicas).
   * MySQL Read replicas: (up to 5 replicas).
   * In case of loss of the primary aurora DB, failover will automatically occur on the Aurora replica, it will not in the MySQL read replica.
+  
+* Backups:
+  * Automated backups are always enabled.
+  * Backups do NOT impact DB performance.
+  * Snapshots are possible (and they DO NOT impact performance).
+  * Aurora snapshpts can be shared with other AWS accounts.
+
